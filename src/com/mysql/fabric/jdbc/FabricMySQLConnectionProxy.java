@@ -1919,6 +1919,14 @@ public class FabricMySQLConnectionProxy extends ConnectionPropertiesImpl impleme
     }
 
     @Override
+    public void setUseUTF8MB4(boolean useUTF8MB4Flag) {
+        super.setUseUTF8MB4(useUTF8MB4Flag);
+        for (ConnectionProperties cp : this.serverConnections.values()) {
+            cp.setUseUTF8MB4(useUTF8MB4Flag);
+        }
+    }
+
+    @Override
     public void setYearIsDateType(boolean flag) {
         super.setYearIsDateType(flag);
         for (ConnectionProperties cp : this.serverConnections.values()) {
@@ -2698,6 +2706,8 @@ public class FabricMySQLConnectionProxy extends ConnectionPropertiesImpl impleme
     public void setGetProceduresReturnsFunctions(boolean getProcedureReturnsFunctions) {
         super.setGetProceduresReturnsFunctions(getProcedureReturnsFunctions);
     }
+
+
 
     // com.mysql.jdbc.Connection
 

@@ -885,6 +885,10 @@ public class MultiHostMySQLConnection implements MySQLConnection {
         return getActiveMySQLConnection().getUseUsageAdvisor();
     }
 
+    public boolean getUseUTF8MB4() {
+        return getActiveMySQLConnection().getUseUTF8MB4();
+    }
+
     public String getUtf8OutsideBmpExcludedColumnNamePattern() {
         return getActiveMySQLConnection().getUtf8OutsideBmpExcludedColumnNamePattern();
     }
@@ -1635,6 +1639,10 @@ public class MultiHostMySQLConnection implements MySQLConnection {
 
     public void setUseUsageAdvisor(boolean useUsageAdvisorFlag) {
         getActiveMySQLConnection().setUseUsageAdvisor(useUsageAdvisorFlag);
+    }
+
+    public void setUseUTF8MB4(boolean useUTF8MB4Flag) {
+        getActiveMySQLConnection().setUseUTF8MB4(useUTF8MB4Flag);
     }
 
     public void setUtf8OutsideBmpExcludedColumnNamePattern(String regexPattern) {

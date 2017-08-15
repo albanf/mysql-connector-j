@@ -71,7 +71,7 @@ import com.mysql.jdbc.util.LRUCache;
 
 /**
  * A Connection represents a session with a specific database. Within the context of a Connection, SQL statements are executed and results are returned.
- * 
+ *
  * <P>
  * A Connection's database is able to provide information describing its tables, its supported SQL grammar, its stored procedures, the capabilities of this
  * connection, etc. This information is obtained with the getMetaData method.
@@ -661,7 +661,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Creates a connection to a MySQL Server.
-     * 
+     *
      * @param hostToConnectTo
      *            the hostname of the database server
      * @param portToConnectTo
@@ -889,7 +889,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Builds the map needed for 4.1.0 and newer servers that maps field-level
      * charset/collation info to a java character encoding name.
-     * 
+     *
      * @throws SQLException
      */
     private void buildCollationMapping() throws SQLException {
@@ -1103,7 +1103,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * Changes the user on this connection by performing a re-authentication. If
      * authentication fails, the connection will remain under the context of the
      * current user.
-     * 
+     *
      * @param userName
      *            the username to authenticate with
      * @param newPassword
@@ -1194,7 +1194,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * If useUnicode flag is set and explicit client character encoding isn't
      * specified then assign encoding from server if any.
-     * 
+     *
      * @throws SQLException
      */
     private void checkServerEncoding() throws SQLException {
@@ -1273,7 +1273,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Set transaction isolation level to the value received from server if any.
      * Is called by connectionInit(...)
-     * 
+     *
      * @throws SQLException
      */
     private void checkTransactionIsolationLevel() throws SQLException {
@@ -1292,7 +1292,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Clobbers the physical network connection and marks
      * this connection as closed.
-     * 
+     *
      * @throws SQLException
      */
     public void abortInternal() throws SQLException {
@@ -1315,7 +1315,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Destroys this connection and any underlying resources
-     * 
+     *
      * @param fromWhere
      * @param whyCleanedUp
      */
@@ -1343,7 +1343,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * After this call, getWarnings returns null until a new warning is reported
      * for this connection.
-     * 
+     *
      * @exception SQLException
      *                if a database access error occurs
      */
@@ -1444,7 +1444,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * automatically released (cant think why off the top of my head) <B>Note:</B>
      * A Connection is automatically closed when it is garbage collected.
      * Certain fatal errors also result in a closed connection.
-     * 
+     *
      * @exception SQLException
      *                if a database access error occurs
      */
@@ -1465,7 +1465,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Closes all currently open statements.
-     * 
+     *
      * @throws SQLException
      */
     private void closeAllOpenStatements() throws SQLException {
@@ -1504,7 +1504,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * <p>
      * <b>Note:</b> MySQL does not support transactions, so this method is a no-op.
      * </p>
-     * 
+     *
      * @exception SQLException
      *                if a database access error occurs
      * @see setAutoCommit
@@ -1560,7 +1560,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Configures client-side properties for character set information.
-     * 
+     *
      * @throws SQLException
      *             if unable to configure the specified character set.
      */
@@ -1601,7 +1601,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Sets up client character set for MySQL-4.1 and newer if the user This
      * must be done before any further communication with the server!
-     * 
+     *
      * @return true if this routine actually configured the client character
      *         set, or false if the driver needs to use 'older' methods to
      *         detect the character set, as it is connected to a MySQL server
@@ -1693,7 +1693,8 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
                             // charset names are case-sensitive
 
                             boolean utf8mb4Supported = versionMeetsMinimum(5, 5, 2);
-                            boolean useutf8mb4 = utf8mb4Supported && (CharsetMapping.UTF8MB4_INDEXES.contains(this.io.serverCharsetIndex));
+                            boolean useutf8mb4 = utf8mb4Supported && (CharsetMapping.UTF8MB4_INDEXES.contains(this.io.serverCharsetIndex) ||
+                                    getUseUTF8MB4());
 
                             if (!getUseOldUTF8Behavior()) {
                                 if (dontCheckServerMatch || !characterSetNamesMatches("utf8") || (utf8mb4Supported && !characterSetNamesMatches("utf8mb4"))) {
@@ -1934,7 +1935,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Configures the client's timezone if required.
-     * 
+     *
      * @throws SQLException
      *             if the timezone the server is configured to use can't be
      *             mapped to a Java timezone.
@@ -1994,7 +1995,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Creates an IO channel to the server
-     * 
+     *
      * @param isForReconnect
      *            is this request for a re-connect
      * @return a new MysqlIO instance connected to a server
@@ -2346,7 +2347,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * SQL statements without parameters are normally executed using Statement
      * objects. If the same SQL statement is executed many times, it is more
      * efficient to use a PreparedStatement
-     * 
+     *
      * @return a new Statement object
      * @throws SQLException
      *             passed through from the constructor
@@ -2358,7 +2359,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * JDBC 2.0 Same as createStatement() above, but allows the default result
      * set type and result set concurrency type to be overridden.
-     * 
+     *
      * @param resultSetType
      *            a result set type, see ResultSet.TYPE_XXX
      * @param resultSetConcurrency
@@ -2402,7 +2403,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Send a query to the server. Returns one of the ResultSet objects. This is
      * synchronized, so Statement's queries will be serialized.
-     * 
+     *
      * @param callingStatement
      * @param sql
      *            the SQL statement to be executed
@@ -2590,7 +2591,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Gets the current auto-commit state
-     * 
+     *
      * @return Current state of auto-commit
      * @exception SQLException
      *                if an error occurs
@@ -2620,7 +2621,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * <p>
      * <b>Note:</b> MySQL's notion of catalogs are individual databases.
      * </p>
-     * 
+     *
      * @return the current catalog name or null
      * @exception SQLException
      *                if a database access error occurs
@@ -2643,7 +2644,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Returns the locally mapped instance of a charset converter (to avoid
      * overhead of static synchronization).
-     * 
+     *
      * @param javaEncodingName
      *            the encoding name to retrieve
      * @return a character converter, or null if one couldn't be mapped.
@@ -2699,7 +2700,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Returns the Java character encoding name for the given MySQL server
      * charset index
-     * 
+     *
      * @param charsetIndex
      * @return the Java character encoding name for the given MySQL server
      *         charset index
@@ -2775,7 +2776,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * NOT JDBC-Compliant, but clients can use this method to determine how long
      * this connection has been idle. This time (reported in milliseconds) is
      * updated once a query has completed.
-     * 
+     *
      * @return number of ms that this connection has been idle, 0 if the driver
      *         is busy retrieving results.
      */
@@ -2794,7 +2795,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Returns the IO channel to the server
-     * 
+     *
      * @return the IO channel to the server
      * @throws SQLException
      *             if the connection is closed.
@@ -2810,7 +2811,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Returns the log mechanism that should be used to log information from/for
      * this Connection.
-     * 
+     *
      * @return the Log instance to use for logging messages.
      * @throws SQLException
      *             if an error occurs
@@ -2876,7 +2877,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * tables, its supported SQL grammar, its stored procedures, the
      * capabilities of this connection, etc. This information is made available
      * through a DatabaseMetaData object.
-     * 
+     *
      * @return a DatabaseMetaData object for this connection
      * @exception SQLException
      *                if a database access error occurs
@@ -2926,7 +2927,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Returns the server's character set
-     * 
+     *
      * @return the server's character set.
      */
     public String getServerCharset() {
@@ -2978,7 +2979,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Get this Connection's current transaction isolation mode.
-     * 
+     *
      * @return the current TRANSACTION_ mode value
      * @exception SQLException
      *                if a database access error occurs
@@ -3056,7 +3057,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * JDBC 2.0 Get the type-map object associated with this connection. By
      * default, the map returned is empty.
-     * 
+     *
      * @return the type map
      * @throws SQLException
      *             if a database error occurs
@@ -3087,7 +3088,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * The first warning reported by calls on this Connection is returned.
      * <B>Note:</B> Sebsequent warnings will be changed to this
      * java.sql.SQLWarning
-     * 
+     *
      * @return the first java.sql.SQLWarning or null
      * @exception SQLException
      *                if a database access error occurs
@@ -3133,7 +3134,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Initializes driver properties that come from URL or properties passed to
      * the driver manager.
-     * 
+     *
      * @param info
      * @throws SQLException
      */
@@ -3183,7 +3184,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Sets varying properties that depend on server information. Called once we
      * have connected to the server.
-     * 
+     *
      * @param info
      * @throws SQLException
      */
@@ -3486,7 +3487,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Is this connection connected to the first host in the list if
      * there is a list of servers in the URL?
-     * 
+     *
      * @return true if this connection is connected to the first in
      *         the list.
      */
@@ -3497,7 +3498,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Is the server in a sql_mode that doesn't allow us to use \\ to escape
      * things?
-     * 
+     *
      * @return Returns the noBackslashEscapes.
      */
     public boolean isNoBackslashEscapesSet() {
@@ -3512,7 +3513,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * Tests to see if the connection is in Read Only Mode. Note that prior to 5.6,
      * we cannot really put the database in read only mode, but we pretend we can by
      * returning the value of the readOnly flag
-     * 
+     *
      * @return true if the connection is read only
      * @exception SQLException
      *                if a database access error occurs
@@ -3525,11 +3526,11 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * Tests to see if the connection is in Read Only Mode. Note that prior to 5.6,
      * we cannot really put the database in read only mode, but we pretend we can by
      * returning the value of the readOnly flag
-     * 
+     *
      * @param useSessionStatus
      *            in some cases, for example when restoring connection with autoReconnect=true,
      *            we can rely only on saved readOnly state, so use useSessionStatus=false in that case
-     * 
+     *
      * @return true if the connection is read only
      * @exception SQLException
      *                if a database access error occurs
@@ -3701,7 +3702,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Loads the result of 'SHOW VARIABLES' into the serverVariables field so
      * that the driver can configure itself.
-     * 
+     *
      * @throws SQLException
      *             if the 'SHOW VARIABLES' query fails for any reason.
      */
@@ -3855,7 +3856,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Is the server configured to use lower-case table names only?
-     * 
+     *
      * @return true if lower_case_table_names is 'on'
      */
     public boolean lowerCaseTableNames() {
@@ -3866,7 +3867,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * A driver may convert the JDBC sql grammar into its system's native SQL
      * grammar prior to sending it; nativeSQL returns the native form of the
      * statement that the driver would have sent.
-     * 
+     *
      * @param sql
      *            a SQL statement that may contain one or more '?' parameter
      *            placeholders
@@ -3911,7 +3912,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Detect if the connection is still good
-     * 
+     *
      * @throws SQLException
      *             if the ping fails
      */
@@ -3951,7 +3952,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * JDBC 2.0 Same as prepareCall() above, but allows the default result set
      * type and result set concurrency type to be overridden.
-     * 
+     *
      * @param sql
      *            the SQL representing the callable statement
      * @param resultSetType
@@ -4027,7 +4028,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * <p>
      * MySQL does not support precompilation of statements, so they are handled by the driver.
      * </p>
-     * 
+     *
      * @param sql
      *            a SQL statement that may contain one or more '?' IN parameter
      *            placeholders
@@ -4054,7 +4055,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * JDBC 2.0 Same as prepareStatement() above, but allows the default result
      * set type and result set concurrency type to be overridden.
-     * 
+     *
      * @param sql
      *            the SQL query containing place holders
      * @param resultSetType
@@ -4178,7 +4179,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Closes connection and frees resources.
-     * 
+     *
      * @param calledExplicitly
      *            is this being called from close()
      * @param issueRollback
@@ -4324,7 +4325,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Register a Statement instance as open.
-     * 
+     *
      * @param stmt
      *            the Statement instance to remove
      */
@@ -4514,7 +4515,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * Resets the server-side state of this connection. Doesn't work for MySQL
      * versions older than 4.0.6 or if isParanoid() is set (it will become a
      * no-op in these cases). Usually only used from connection pooling code.
-     * 
+     *
      * @throws SQLException
      *             if the operation fails while resetting server state.
      */
@@ -4528,7 +4529,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * The method rollback() drops all changes made since the previous
      * commit/rollback and releases any database locks currently held by the
      * Connection.
-     * 
+     *
      * @exception SQLException
      *                if a database access error occurs
      * @see commit
@@ -4759,7 +4760,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * single statement may return multiple results as well as output parameter
      * values. Here the commit occurs when all results and output param values
      * have been retrieved.
-     * 
+     *
      * @param autoCommitFlag
      *            true enables auto-commit; false disables it
      * @exception SQLException
@@ -4837,7 +4838,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * <p>
      * <b>Note:</b> MySQL's notion of catalogs are individual databases.
      * </p>
-     * 
+     *
      * @param catalog
      *            the database for this connection to use
      * @throws SQLException
@@ -4933,7 +4934,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * You can put a connection in read-only mode as a hint to enable database
      * optimizations <B>Note:</B> setReadOnly cannot be called while in the
      * middle of a transaction
-     * 
+     *
      * @param readOnlyFlag
      *            -
      *            true enables read-only mode; false disables it
@@ -5110,7 +5111,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * JDBC 2.0 Install a type-map object as the default type-map for this
      * connection
-     * 
+     *
      * @param map
      *            the type mapping
      * @throws SQLException
@@ -5153,7 +5154,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Used by MiniAdmin to shutdown a MySQL server
-     * 
+     *
      * @throws SQLException
      *             if the command can not be issued.
      */
@@ -5188,7 +5189,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Remove the given statement from the list of open statements
-     * 
+     *
      * @param stmt
      *            the Statement instance to remove
      */
@@ -5211,14 +5212,14 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Returns cached metadata (or null if not cached) for the given query,
      * which must match _exactly_.
-     * 
+     *
      * This method is synchronized by the caller on getMutex(), so if
      * calling this method from internal code in the driver, make sure it's
      * synchronized on the mutex that guards communication with the server.
-     * 
+     *
      * @param sql
      *            the query that is the key to the cache
-     * 
+     *
      * @return metadata cached for the given SQL, or none if it doesn't
      *         exist.
      */
@@ -5235,18 +5236,18 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Caches CachedResultSetMetaData that has been placed in the cache using
      * the given SQL as a key.
-     * 
+     *
      * This method is synchronized by the caller on getMutex(), so if
      * calling this method from internal code in the driver, make sure it's
      * synchronized on the mutex that guards communication with the server.
-     * 
+     *
      * @param sql
      *            the query that the metadata pertains too.
      * @param cachedMetaData
      *            metadata (if it exists) to populate the cache.
      * @param resultSet
      *            the result set to retreive metadata from, or apply to.
-     * 
+     *
      * @throws SQLException
      */
     public void initializeResultsMetadataFromCache(String sql, CachedResultSetMetaData cachedMetaData, ResultSetInternalMethods resultSet) throws SQLException {
@@ -5280,7 +5281,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Returns the comment that will be prepended to all statements
      * sent to the server.
-     * 
+     *
      * @return the comment that will be prepended to all statements
      *         sent to the server.
      */
@@ -5292,7 +5293,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * Sets the comment that will be prepended to all statements
      * sent to the server. Do not use slash-star or star-slash tokens
      * in the comment as these will be added by the driver itself.
-     * 
+     *
      * @param comment
      *            the comment that will be prepended to all statements
      *            sent to the server.
@@ -5396,7 +5397,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     /**
      * Sets the sql select limit max-rows for this session if different from current.
-     * 
+     *
      * @param max
      *            the new max-rows value to set.
      * @throws SQLException
@@ -5446,7 +5447,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
      * <p>
      * This method checks to see that there is an <code>SQLPermission</code> object before allowing the method to proceed. If a <code>SecurityManager</code>
      * exists and its <code>checkPermission</code> method denies calling <code>abort</code>, this method throws a <code>java.lang.SecurityException</code>.
-     * 
+     *
      * @param executor
      *            The <code>Executor</code> implementation which will
      *            be used by <code>abort</code>.

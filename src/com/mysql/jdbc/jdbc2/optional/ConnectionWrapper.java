@@ -1710,6 +1710,10 @@ public class ConnectionWrapper extends WrapperBase implements Connection {
         return this.mc.getUseUsageAdvisor();
     }
 
+    public boolean getUseUTF8MB4() {
+        return this.mc.getUseUTF8MB4();
+    }
+
     public String getUtf8OutsideBmpExcludedColumnNamePattern() {
         return this.mc.getUtf8OutsideBmpExcludedColumnNamePattern();
     }
@@ -2392,6 +2396,10 @@ public class ConnectionWrapper extends WrapperBase implements Connection {
 
     public void setUseUsageAdvisor(boolean useUsageAdvisorFlag) {
         this.mc.setUseUsageAdvisor(useUsageAdvisorFlag);
+    }
+
+    public void setUseUTF8MB4(boolean useUTF8MB4Flag) {
+        this.mc.setUseUTF8MB4(useUTF8MB4Flag);
     }
 
     public void setUtf8OutsideBmpExcludedColumnNamePattern(String regexPattern) {
