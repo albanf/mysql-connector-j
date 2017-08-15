@@ -397,6 +397,11 @@ public interface ConnectionProperties {
      */
     public boolean getUseUsageAdvisor();
 
+    /**
+     * @return Returns the useUTF8MB4.
+     */
+    public boolean getUseUTF8MB4();
+
     public boolean getYearIsDateType();
 
     /**
@@ -954,6 +959,8 @@ public interface ConnectionProperties {
      *            whether or not the driver advises of proper usage.
      */
     public void setUseUsageAdvisor(boolean useUsageAdvisorFlag);
+
+    public void setUseUTF8MB4(boolean useUTF8MB4Flag);
 
     public void setYearIsDateType(boolean flag);
 

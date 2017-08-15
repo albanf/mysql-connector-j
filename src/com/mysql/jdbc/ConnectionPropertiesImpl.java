@@ -1250,6 +1250,11 @@ public class ConnectionPropertiesImpl implements Serializable, ConnectionPropert
 
     private boolean useUsageAdvisorAsBoolean = false;
 
+    private BooleanConnectionProperty useUTF8MB4 = new BooleanConnectionProperty("useUTF8MB4", false,
+            Messages.getString("ConnectionProperties.useUTF8MB4"), "5.1.43", MISC_CATEGORY, Integer.MIN_VALUE);
+
+    private boolean useUTF8MB4AsBoolean = false;
+
     private BooleanConnectionProperty yearIsDateType = new BooleanConnectionProperty("yearIsDateType", true,
             Messages.getString("ConnectionProperties.yearIsDateType"), "3.1.9", MISC_CATEGORY, Integer.MIN_VALUE);
 
@@ -2431,6 +2436,15 @@ public class ConnectionPropertiesImpl implements Serializable, ConnectionPropert
 
     /*
      * (non-Javadoc)
+     *
+     * @see com.mysql.jdbc.IConnectionProperties#getUseUTF8MB4()
+     */
+    public boolean getUseUTF8MB4() {
+        return this.useUTF8MB4AsBoolean;
+    }
+
+    /*
+     * (non-Javadoc)
      * 
      * @see com.mysql.jdbc.IConnectionProperties#getYearIsDateType()
      */
@@ -2573,6 +2587,7 @@ public class ConnectionPropertiesImpl implements Serializable, ConnectionPropert
         this.autoGenerateTestcaseScriptAsBoolean = this.autoGenerateTestcaseScript.getValueAsBoolean();
         this.maintainTimeStatsAsBoolean = this.maintainTimeStats.getValueAsBoolean();
         this.jdbcCompliantTruncationForReads = getJdbcCompliantTruncation();
+        this.useUTF8MB4AsBoolean = this.useUTF8MB4.getValueAsBoolean();
 
         if (getUseCursorFetch()) {
             // assume they want to use server-side prepared statements because they're required for this functionality
@@ -3512,6 +3527,16 @@ public class ConnectionPropertiesImpl implements Serializable, ConnectionPropert
     public void setUseUsageAdvisor(boolean useUsageAdvisorFlag) {
         this.useUsageAdvisor.setValue(useUsageAdvisorFlag);
         this.useUsageAdvisorAsBoolean = this.useUsageAdvisor.getValueAsBoolean();
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.mysql.jdbc.IConnectionProperties#setUseUTF8MB4(boolean)
+     */
+    public void setUseUTF8MB4(boolean useUTF8MB4Flag) {
+        this.useUTF8MB4.setValue(useUTF8MB4Flag);
+        this.useUTF8MB4AsBoolean = this.useUTF8MB4.getValueAsBoolean();
     }
 
     /*
