@@ -3659,8 +3659,12 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
                     @SuppressWarnings("synthetic-access")
                     public SQLException interceptException(SQLException sqlEx, Connection conn) {
-                        if (sqlEx.getSQLState() != null && sqlEx.getSQLState().startsWith("08")) {
-                            ConnectionImpl.this.serverConfigCache.invalidate(getURL());
+                        String sqlState = sqlEx.getSQLState();
+                        if (sqlState != null) {
+                            if (sqlState.startsWith("08") ||
+                                    (sqlState.equals("HY000") && sqlEx.getErrorCode() == 1290)) {
+                                ConnectionImpl.this.serverConfigCache.invalidate(getURL());
+                            }
                         }
                         return null;
                     }

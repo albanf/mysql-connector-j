@@ -1,10 +1,11 @@
-/bin/
-/build/
-/dist/
-/nbproject/
-/patches/
-/*.properties
+bin
+build
+dist
+nbproject
+patches
+build.properties
 *~
 *.lock
 *.swp
 *.DS_Store
+.idea

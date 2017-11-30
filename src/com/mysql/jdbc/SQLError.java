@@ -903,7 +903,8 @@ public class SQLError {
             SQLException sqlEx = null;
 
             if (sqlState != null) {
-                if (sqlState.startsWith("08")) {
+                if (sqlState.startsWith("08") ||
+                        (sqlState.equals("HY000") && vendorErrorCode == 1290 )) {
                     if (isTransient) {
                         if (!Util.isJdbc4()) {
                             sqlEx = new MySQLTransientConnectionException(message, sqlState, vendorErrorCode);
